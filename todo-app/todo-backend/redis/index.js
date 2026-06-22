@@ -3,6 +3,7 @@ const { REDIS_URL } = require('../util/config')
 
 let set
 let get
+let incr
 
 if (!REDIS_URL) {
   const redisIsDisabled = () => {
@@ -11,6 +12,7 @@ if (!REDIS_URL) {
   }
   set = redisIsDisabled
   get = redisIsDisabled
+  incr = redisIsDisabled
 } else {
   let client = redis.createClient({
     url: REDIS_URL
@@ -24,9 +26,11 @@ if (!REDIS_URL) {
     
   get = (...args) => client.get(...args)
   set = (...args) => client.set(...args)
+  incr = (...args) => client.incr(...args)
 }
 
 module.exports = {
   get,
   set,
+  incr
 }
