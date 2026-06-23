@@ -15,13 +15,13 @@ router.post('/', async (req, res) => {
     text: req.body.text,
     done: false
   })
-  redis.incr('added_todos')
+  await redis.incr('added_todos')
   res.send(todo);
 });
 
 router.get('/statistics', async (_, res) => {
-  const added_todos = (await redis.get('added_todos')) ?? 0
-  res.send({ added_todos })
+  const addedTodos = await redis.get('added_todos')
+  res.status(200).send({ added_todos: Number(addedTodos ?? 0) });
 })
 
 const singleRouter = express.Router();

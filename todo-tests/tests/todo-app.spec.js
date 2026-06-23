@@ -83,14 +83,14 @@ test.describe('Backend API Tests', () => {
     expect(createdTodo).toHaveProperty('_id');
   });
 
-  test('GET /api/statistics returns added_todos count from Redis', async ({ request }) => {
+  test('GET /api/todos/statistics returns added_todos count from Redis', async ({ request }) => {
     // First, create a todo to increment the counter
     await request.post('/api/todos', {
       data: { text: 'Stats test todo', done: false }
     });
     
     // Then check statistics
-    const response = await request.get('/api/statistics');
+    const response = await request.get('/api/todos/statistics');
     
     expect(response.status()).toBe(200);
     
